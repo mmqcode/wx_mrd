@@ -31,7 +31,7 @@
                                timestamp:jsonData.timestamp,
                                nonceStr:jsonData.nonceStr,
                                signature:jsonData.signature,
-                               jsApiList:["chooseImage"]
+                               jsApiList:["chooseImage","uploadImage"]
 
                            });
                        }else{
@@ -48,11 +48,33 @@
                         sourceType: ['album','camera'], // 可以指定来源是相册还是相机，默认二者都有
                         success: function (res) {
                             var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+
+                            var imageString = "<img style='width: 100%;' src="+localIds+">";
+                            $("<div style='float: left;width: 100px;margin: 10px;'>"+imageString+"</div>").appendTo("div[name='imgDiv']");
                         }
                     });
                 });
-            });
 
+                $("a[name='uploadPic']").click(function(){
+                    $("img").each(function(){
+                        var localid = $(this).attr("src");
+                        wx.uploadImage({
+                            localId:localid,
+                            isShowProgressTips:1,
+                            success: function (res) {
+                                var serverId = res.serverId; // 返回图片的服务器端ID
+                                alert("serverId:"+serverId);
+                            }
+
+                        });
+
+                    });
+
+                });
+
+
+
+            });
 
 
         </script>
@@ -65,6 +87,14 @@
 
 
     <a href="javascript:;" class="weui_btn weui_btn_primary" name="selectPic">选择图片</a>
+    <div name="imgDiv" style="width: 100%;">
+
+
+    </div>
+
+    <div style="float: left;">
+        <a href="javascript:;" class="weui_btn weui_btn_primary" name="uploadPic">上 传</a>
+    </div>
 
 
 </html>

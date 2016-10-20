@@ -40,6 +40,7 @@ public class JsSdkConfigController {
     private FileTool fileTool;
 
     private static final String exceptionCode = "0";
+    private static final String successCode = "1";
 
 
     @RequestMapping(value="ajaxLoadConfigParam", produces = "text/json;charset=UTF-8", method = RequestMethod.POST)
@@ -54,6 +55,7 @@ public class JsSdkConfigController {
             resultMap = Sign.sign(jsApiTicket.getTicket(),pageUrl);
             String appid = this.fileTool.getParamByName(Constants.WECHAT_APPID_NAME, Constants.WECHAT_PROPERTIES_FILENAME);
             resultMap.put("appid",appid);
+            resultMap.put("code",successCode);
             Gson gson =new GsonBuilder()
                     .disableHtmlEscaping()
                     .create();

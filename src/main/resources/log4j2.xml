@@ -15,7 +15,7 @@
 
         <!-- 文件方式记录，日志文件位于当前配置文件的相对目录中 -->
         <RollingRandomAccessFile name="running-log"
-                                 fileName="${log4j:configParentLocation}/${LOG_HOME}/${FILE_NAME}.log" filePattern="${LOG_HOME}/$${date:yyyy-MM}/${FILE_NAME}-%d{yyyy-MM-dd}-%i.log.gz">
+                                 fileName="${log4j:configParentLocation}/${LOG_HOME}/${FILE_NAME}.log" filePattern="${log4j:configParentLocation}/${LOG_HOME}/$${date:yyyy-MM}/${FILE_NAME}-%d{yyyy-MM-dd}-%i.log.gz">
             <!-- 日志输出格式 -->
             <PatternLayout charset="UTF-8"
                     pattern="%date{yyyy-MM-dd HH:mm:ss.SSS} %level [%thread][%file:%line] - %msg%n" />
