@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+        <link rel="stylesheet" href="${request.contextPath}/staticResources/jqueryWeui/lib/weui.min.css">
+        <link rel="stylesheet" href="${request.contextPath}/staticResources/jqueryWeui/css/jquery-weui.css">
+        <script src="${request.contextPath}/staticResources/jqueryWeui/lib/jquery-2.1.4.js"></script>
+        <script src="${request.contextPath}/staticResources/jqueryWeui/js/jquery-weui.min.js"></script>
+        <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+        <script type="text/javascript">
+            var pageUrl = window.location.href;
+            $(document).ready(function () {
+                $.ajax({
+                    url:"${request.contextPath}/WeChat/JsSdkConfigController/ajaxLoadConfigParam",
+                    type:"post",
+                    data:{
+                        "pageUrl":pageUrl
+
+                    },
+                    dataType:"json",
+                    error:function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert("失败:readyState"+XMLHttpRequest.readyState+",status"+XMLHttpRequest.status+",msg:"+textStatus);
+                    },
+                    success:function(jsonData){
+                       if(jsonData.code == "1"){
+                           wx.config({
+                               debug:true,
+                               appId:jsonData.appid,
+                               timestamp:jsonData.timestamp,
+                               nonceStr:jsonData.nonceStr,
+                               signature:jsonData.signature,
+                               jsApiList:["chooseImage"]
+
+                           });
+                       }else{
+                           alert(jsonData.msg);
+                       }
+                    }
+
+                });
+
+                $("a[name='selectPic']").click(function () {
+                    wx.chooseImage({
+                        count: 1, // 默认9
+                        sizeType: ['compressed'], // 可以指定是原图还是压缩图，默认二者都有
+                        sourceType: ['album','camera'], // 可以指定来源是相册还是相机，默认二者都有
+                        success: function (res) {
+                            var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+                        }
+                    });
+                });
+            });
+
+
+
+        </script>
+
+
+    </head>
+
+
+    <a href="javascript:;" class="weui_btn weui_btn_primary">${model.userinfo.nickname}</a>
+
+
+    <a href="javascript:;" class="weui_btn weui_btn_primary" name="selectPic">选择图片</a>
+
+
+</html>
