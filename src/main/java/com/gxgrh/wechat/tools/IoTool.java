@@ -6,7 +6,7 @@ import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 
-/**
+/**流操作
  * Created by Administrator on 2016/9/27.
  */
 @Component
