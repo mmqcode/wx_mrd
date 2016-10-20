@@ -1,6 +1,6 @@
 package com.gxgrh.wechat.tools;
 
-/**常量类，集中存储微信项目用到的常量，项目中用到的常量最好在本类配置。
+/**常量类，集中存储微信项目用到的常量，项目中用到的全局常量最好在本类配置。
  * Created by Administrator on 2016/9/26.
  */
 public class Constants {
