@@ -175,7 +175,7 @@ public class MsgHandlerImpl implements IMsgHandler {
                 Article article = new Article();
                 article.setDigest("test");
                 article.setAuthor("mmq");
-                article.setContent("士大夫撒个撒都干撒干撒的吩咐过撒地方撒");
+                article.setContent("士大夫撒个撒都干撒干撒的吩咐过12312");
                 article.setContentSourceUrl("http://www.baidu.com");
                 article.setShowCoverPic("1");
                 article.setThumbMediaId("zaWs-lWK-AE0YJFUQuBm3ExFEcp9qGWYGJoeHp4fgO4");
