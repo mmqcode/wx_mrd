@@ -173,6 +173,7 @@ public class FileController {
         }
         try{
             if(!isTokenExists){
+                //302重定向到客户服务登录界面
                 response.sendRedirect("http://192.168.1.145:8087/EasyUILearningII/login/applyToken?url=accessWebApp");
             }
         }catch (Exception e){
