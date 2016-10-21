@@ -1,5 +1,6 @@
 package com.gxgrh.wechat.oauth.service;
 
+import com.gxgrh.wechat.tools.Constants;
 import com.gxgrh.wechat.tools.Validate;
 import com.gxgrh.wechat.wechatapi.responseentity.userinfo.WeChatUserInfo;
 import com.gxgrh.wechat.wechatapi.service.UserInfoApiService;
@@ -18,6 +19,8 @@ import java.util.Map;
 public class OauthHandler {
 
     private static final Logger logger = LogManager.getLogger(OauthHandler.class);
+    private static final String CODE = "code";
+    private static final String STATE = "state";
 
     @Autowired
     private UserInfoApiService userInfoApiService;
@@ -29,8 +32,8 @@ public class OauthHandler {
         String state = null;
         try{
             if(!Validate.isString(openid)){
-                code = request.getParameter("code");
-                state = request.getParameter("state");
+                code = request.getParameter(this.CODE);
+                state = request.getParameter(this.STATE);
             }
 
             Map<String,String> infoMap =  userInfoApiService.getOauthInfoWhileAccessPage(code);
@@ -38,13 +41,18 @@ public class OauthHandler {
                 openid = infoMap.get("openid");
                 String accessToken = infoMap.get("access_token");
                 try{
-                    userInfo = userInfoApiService.getWeChatUserInfo(openid);//(snsapi_base)或者查询数据库，如果已经存在有记录，则认证完毕。
+                    //(snsapi_base)或者查询数据库，如果已经存在有记录，则认证完毕。
+                    userInfo = userInfoApiService.getWeChatUserInfo(openid);
+                    //将用户信息放到session中
+                    request.getSession().setAttribute(Constants.WECHAT_PAGE_CURRENTUSER,userInfo);
                 }catch (Exception e){
                     logger.info(e.getMessage());
                 }
 
                 if(null == userInfo){
                     userInfo = userInfoApiService.getUserInfoWhileAccessPage(openid, accessToken);//(snsapi_userinfo)方式
+                    //将用户信息放到session中
+                    request.getSession().setAttribute(Constants.WECHAT_PAGE_CURRENTUSER,userInfo);
                 }
                 logger.info("用户数据已经获取到:"+userInfo.toString());
             }

@@ -33,7 +33,6 @@
     </script>
 </head>
 <body>
-<h2>Hello World!</h2>
 <form action="FileController/saveMeida" method="post" enctype="multipart/form-data" target="_blank">
     uploader:<input type="text" name="uploader" />
     <input type="file" name="file" />

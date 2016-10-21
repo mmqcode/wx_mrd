@@ -26,6 +26,7 @@ public class CustomMenuApiService extends BaseApiService {
     private final String getMenuPath = "/cgi-bin/menu/get";
     private final String deleteMenuPath = "/cgi-bin/menu/delete";
     private final String createMenuPath = "/cgi-bin/menu/create";
+    private final String getSelfMenuPath = "/cgi-bin/get_current_selfmenu_info";
     private static final Logger logger = LogManager.getLogger(CustomMenuApiService.class);
 
 

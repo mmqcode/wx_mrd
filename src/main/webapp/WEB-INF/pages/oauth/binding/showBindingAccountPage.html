@@ -31,7 +31,7 @@
                                timestamp:jsonData.timestamp,
                                nonceStr:jsonData.nonceStr,
                                signature:jsonData.signature,
-                               jsApiList:["chooseImage","uploadImage"]
+                               jsApiList:["chooseImage","uploadImage","getNetworkType","getLocation",]
 
                            });
                        }else{
@@ -40,6 +40,34 @@
                     }
 
                 });
+
+                wx.ready(function () {
+                    wx.checkJsApi({
+                        jsApiList:['startRecord','stopRecord'],
+                        success:function (res) {
+                            $.each(res.checkResult,function(name,value){
+                                alert(name+":"+value);
+                            });
+                        }
+                    });
+
+                    wx.getNetworkType({
+                        success:function(res){
+                            alert(res.networkType);
+                        }
+                    });
+
+                    wx.getLocation({
+                        type:"wgs84",
+                        success:function(res){
+
+
+                        }
+
+                    });
+
+                });
+
 
                 $("a[name='selectPic']").click(function () {
                     wx.chooseImage({
@@ -71,8 +99,6 @@
                     });
 
                 });
-
-
 
             });
 

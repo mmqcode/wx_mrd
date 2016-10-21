@@ -11,6 +11,7 @@ public class Constants {
     public static final String WECHAT_SECRET_NAME = "secret";
     public static final String WECHAT_ENCODING_AES_KEY_NAME = "encodingAesKey";
     public static final String WECHAT_TOKEN_NAME = "tokon";
+    public static final String WECHAT_ACCOUNT_NAME = "account";
     public static final String WECHAT_ACCESS_TOKEN_EXPIRE_TIME_NAME = "access_token_expire";
     public static final String WECHAT_JSAPI_TICKET_NAME = "jsapi_ticket";
     public static final String WECHAT_JSAPI_TICKET_EXPIRE_TIME_NAME = "jsapi_ticket_expire";
@@ -67,5 +68,9 @@ public class Constants {
 
     //配置文件的名字
     public static final String WECHAT_PROPERTIES_FILENAME = "WeChatConfigInfo.properties";
+
+
+    //当前会话用户
+    public static final String WECHAT_PAGE_CURRENTUSER = "CURRENTUSER";
 
 }
