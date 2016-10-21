@@ -4,10 +4,8 @@ import com.google.gson.Gson;
 import com.gxgrh.wechat.tools.Constants;
 import com.gxgrh.wechat.tools.FileTool;
 import com.gxgrh.wechat.tools.JsonTool;
-import com.gxgrh.wechat.wechatapi.responseentity.kefu.KeFuListRsp;
-import com.gxgrh.wechat.wechatapi.responseentity.kefu.KeFuOnlineListRsp;
-import com.gxgrh.wechat.wechatapi.responseentity.kefu.KeFuSessionListRsp;
-import com.gxgrh.wechat.wechatapi.responseentity.kefu.WaitCaseListRsp;
+import com.gxgrh.wechat.tools.Validate;
+import com.gxgrh.wechat.wechatapi.responseentity.kefu.*;
 import com.gxgrh.wechat.wechatapi.responseentity.system.AccessToken;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.logging.log4j.LogManager;
@@ -47,6 +45,9 @@ public class KeFuApiService extends BaseApiService{
     private static final String getKfSessionInfoPath = "/customservice/kfsession/getsession";
     private static final String getKfSessionListPath = "/customservice/kfsession/getsessionlist";
     private static final String getWaitCaseListPath = "/customservice/kfsession/getwaitcase";
+    private static final String getMsgListPath = "/customservice/msgrecord/getmsglist";
+
+
 
 
 
@@ -136,8 +137,10 @@ public class KeFuApiService extends BaseApiService{
             requestMap.put("nickname", nickName);
             String requestJson = this.jsonTool.mapToJsonString(requestMap);
 
+            logger.info("use targetUrL:["+url+"],use data:["+requestJson+"]");
             String jsonResponse = sendPost(url, requestJson);
             resultMap = this.jsonTool.jsonToSimpleMap(jsonResponse);
+            logger.info("jsonResponse:"+jsonResponse);
             if(!"0".equals(resultMap.get("errcode"))){
                 String errMsg = "调用接口:"+url+"失败!原因:" + resultMap.get("errmsg");
                 throw new Exception(errMsg);
@@ -170,9 +173,11 @@ public class KeFuApiService extends BaseApiService{
             Map<String,String> requestMap = new HashMap<String, String>();
             requestMap.put("kf_account", kfAccount);
             requestMap.put("invite_wx", inviteWxAccount);
-
             String requestJson = this.jsonTool.mapToJsonString(requestMap);
+
+            logger.info("use targetUrL:["+url+"],use data:["+requestJson+"]");
             String jsonResponse = sendPost(url, requestJson);
+            logger.info("jsonResponse:"+jsonResponse);
             resultMap = this.jsonTool.jsonToSimpleMap(jsonResponse);
             if(!"0".equals(resultMap.get("errcode"))){
                 String errMsg = "调用接口:"+url+"失败!原因:" + resultMap.get("errmsg");
@@ -209,7 +214,9 @@ public class KeFuApiService extends BaseApiService{
             requestMap.put("nickname", nickName);
 
             String requestJson = this.jsonTool.mapToJsonString(requestMap);
+            logger.info("use targetUrL:["+url+"],use data:["+requestJson+"]");
             String jsonResponse = sendPost(url, requestJson);
+            logger.info("jsonResponse:"+jsonResponse);
             resultMap = this.jsonTool.jsonToSimpleMap(jsonResponse);
             if(!"0".equals(resultMap.get("errcode"))){
                 String errMsg = "调用接口:"+url+"失败!原因:" + resultMap.get("errmsg");
@@ -240,7 +247,9 @@ public class KeFuApiService extends BaseApiService{
                     .setParameter(Constants.WECHAT_ACCESS_TOKEN_NAME, accessToken.getAccess_token())
                     .setParameter("kf_account",kfAccount);
             String url = uriBuilder.build().toString();
+            logger.info("use targetUrL:["+url+"]");
             String jsonResponse = sendMutiPartFormData(url, imgPath, "media");
+            logger.info("jsonResponse:"+jsonResponse);
             resultMap = this.jsonTool.jsonToSimpleMap(jsonResponse);
             if(!"0".equals(resultMap.get("errcode"))){
                 String errMsg = "调用接口:"+url+"失败!原因:" + resultMap.get("errmsg");
@@ -271,7 +280,9 @@ public class KeFuApiService extends BaseApiService{
                     .setParameter(Constants.WECHAT_ACCESS_TOKEN_NAME, accessToken.getAccess_token())
                     .setParameter("kf_account",kfAccount);
             String url = uriBuilder.build().toString();
+            logger.info("use targetUrL:["+url+"]");
             String jsonResponse = sendGet(url);
+            logger.info("jsonResponse:"+jsonResponse);
             resultMap = this.jsonTool.jsonToSimpleMap(jsonResponse);
             if(!"0".equals(resultMap.get("errcode"))){
                 String errMsg = "调用接口:"+url+"失败!原因:" + resultMap.get("errmsg");
@@ -306,8 +317,10 @@ public class KeFuApiService extends BaseApiService{
             Map<String,String> requestMap = new HashMap<String, String>();
             requestMap.put("kf_account", kfAccount);
             requestMap.put("openid", openid);
-            String jsonRequest = this.jsonTool.mapToJsonString(requestMap);
-            String jsonResponse = sendPost(url, jsonRequest);
+            String requestJson = this.jsonTool.mapToJsonString(requestMap);
+            logger.info("use targetUrL:["+url+"],use data:["+requestJson+"]");
+            String jsonResponse = sendPost(url, requestJson);
+            logger.info("jsonResponse:"+jsonResponse);
             if("0".equals(jsonResponse)){
                 resultMap = new HashMap<String, String>();
                 requestMap.put("errcode","0");
@@ -328,7 +341,7 @@ public class KeFuApiService extends BaseApiService{
     }
 
     /**
-     *
+     *关闭会话
      * @param kfAccount 完整客服帐号，格式为：帐号前缀@公众号微信号
      * @param openid 粉丝的openid
      * @return Map<String,String> keys:errcode/errmsg
@@ -346,8 +359,10 @@ public class KeFuApiService extends BaseApiService{
             Map<String,String> requestMap = new HashMap<String, String>();
             requestMap.put("kf_account", kfAccount);
             requestMap.put("openid", openid);
-            String jsonRequest = this.jsonTool.mapToJsonString(requestMap);
-            String jsonResponse = sendPost(url, jsonRequest);
+            String requestJson = this.jsonTool.mapToJsonString(requestMap);
+            logger.info("use targetUrL:["+url+"],use data:["+requestJson+"]");
+            String jsonResponse = sendPost(url, requestJson);
+            logger.info("jsonResponse:"+jsonResponse);
             resultMap = this.jsonTool.jsonToSimpleMap(jsonResponse);
             if(!"0".equals(resultMap.get("errcode"))){
                 String errMsg = "调用接口:"+url+"失败!原因:" + resultMap.get("errmsg");
@@ -376,7 +391,9 @@ public class KeFuApiService extends BaseApiService{
                     .setPath(getKfSessionListPath)
                     .setParameter(Constants.WECHAT_ACCESS_TOKEN_NAME, accessToken.getAccess_token());
             String url = uriBuilder.build().toString();
+            logger.info("use targetUrL:["+url+"],use data:[]");
             String jsonResponse = sendGet(url);
+            logger.info("jsonResponse:"+jsonResponse);
             resultMap = this.jsonTool.jsonToSimpleMap(jsonResponse);
             if(!"0".equals(resultMap.get("errcode"))){
                 String errMsg = "调用接口:"+url+"失败!原因:" + resultMap.get("errmsg");
@@ -406,7 +423,9 @@ public class KeFuApiService extends BaseApiService{
                     .setParameter(Constants.WECHAT_ACCESS_TOKEN_NAME, accessToken.getAccess_token())
                     .setParameter("kf_account",kfAccount);
             String url = uriBuilder.build().toString();
+            logger.info("use targetUrL:["+url+"],use data:[]");
             String jsonResponse = sendGet(url);
+            logger.info("jsonResponse:"+jsonResponse);
             keFuSessionListRsp = gson.fromJson(jsonResponse, KeFuSessionListRsp.class);
             if(keFuSessionListRsp.getErrcode() != null){
                 String errMsg = "调用接口:"+url+"失败!原因:" + keFuSessionListRsp.getErrmsg();
@@ -430,10 +449,12 @@ public class KeFuApiService extends BaseApiService{
             uriBuilder.clearParameters();
             uriBuilder.setScheme(Constants.WECHAT_API_SCHEME)
                     .setHost(Constants.WECHAT_API_HOST)
-                    .setPath(getKfSessionInfoPath)
+                    .setPath(getWaitCaseListPath)
                     .setParameter(Constants.WECHAT_ACCESS_TOKEN_NAME, accessToken.getAccess_token());
             String url = uriBuilder.build().toString();
+            logger.info("use targetUrL:["+url+"],use data:[]");
             String jsonResponse = sendGet(url);
+            logger.info("jsonResponse:"+jsonResponse);
             waitCaseListRsp = gson.fromJson(jsonResponse, WaitCaseListRsp.class);
             if(waitCaseListRsp.getErrcode() != null){
                 String errMsg = "调用接口:"+url+"失败!原因:" + waitCaseListRsp.getErrmsg();
@@ -445,6 +466,63 @@ public class KeFuApiService extends BaseApiService{
         }
         return waitCaseListRsp;
     }
+
+    /**
+     *获取聊天记录
+     * @param starTime 起始时间，unix时间戳
+     * @param endTime 结束时间，unix时间戳，每次查询时段不能超过24小时
+     * @param msgid 消息id顺序从小到大，从1开始
+     * @param number 每次获取条数，最多10000条
+     * @return MsgListRsp
+     */
+    public MsgListRsp getMsgList(int starTime, int endTime, int msgid, int number){
+        MsgListRsp msgListRsp = null;
+        try{
+            AccessToken accessToken = refreshAccessToken();
+            uriBuilder.clearParameters();
+            uriBuilder.setScheme(Constants.WECHAT_API_SCHEME)
+                    .setHost(Constants.WECHAT_API_HOST)
+                    .setPath(getMsgListPath)
+                    .setParameter(Constants.WECHAT_ACCESS_TOKEN_NAME, accessToken.getAccess_token());
+            String url = uriBuilder.build().toString();
+            String requestJson = makeJsonDataForGetMsgList(starTime, endTime, msgid, number);
+            logger.info("use targetUrL:["+url+"],use data:[]");
+            String jsonResponse = sendPost(url, requestJson);
+            logger.info("jsonResponse:"+jsonResponse);
+            msgListRsp = gson.fromJson(jsonResponse, MsgListRsp.class);
+            if(msgListRsp.getErrcode() != null){
+                String errMsg = "调用接口:"+url+"失败!原因:" + msgListRsp.getErrmsg();
+                throw new Exception(errMsg);
+            }
+        }catch (Exception e){
+            logger.error(e.getMessage());
+            e.printStackTrace();
+        }
+
+        return msgListRsp;
+
+    }
+
+
+    private String makeJsonDataForGetMsgList(int starTime, int endTime, int msgid, int number) throws Exception{
+        Map<String,Integer> requestMap = new HashMap<String, Integer>();
+        if(!Validate.isString(starTime) ||
+                !Validate.isString(endTime) ||
+                !Validate.isString(msgid) ||
+                !Validate.isString(number) ){
+
+            throw new Exception("参数不足，无法获取聊天记录。");
+
+        }
+        requestMap.put("starttime", starTime);
+        requestMap.put("endtime", endTime);
+        requestMap.put("msgid", msgid);
+        requestMap.put("number", number);
+
+        return gson.toJson(requestMap);
+
+    }
+
 
 
 }

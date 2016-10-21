@@ -51,6 +51,7 @@ public class JsSdkConfigController {
         Map<String,String> resultMap = null;
         String resultJson = null;
         try{
+            //刷新jssdk_ticket
             JsApiTicket jsApiTicket = this.jsSdkApiService.refreshJsApiTick();
             resultMap = Sign.sign(jsApiTicket.getTicket(),pageUrl);
             String appid = this.fileTool.getParamByName(Constants.WECHAT_APPID_NAME, Constants.WECHAT_PROPERTIES_FILENAME);

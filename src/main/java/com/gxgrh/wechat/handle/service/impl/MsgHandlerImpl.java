@@ -233,8 +233,8 @@ public class MsgHandlerImpl implements IMsgHandler {
                 Map<String,String> map = this.systemApiService.getShortUrl("http://detail.koudaitong.com/show/goods?alias=128wi9shh&spm=h56083&redirect_count=1");
                 respponseContent = map.get("short_url");
             }else if(Validate.isString(content) && content.equals("addkf_mmq")){
+                //测试添加客服账号
                 keFuApiService.addKFAccount("mmq","小莫");
-
             }
             if(reponseType == "text"){
                 returnXml = responseXmlGenerator.getResponseTextXml(respponseContent,textMsgRequest);
